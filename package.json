@@ -1,0 +1,11 @@
+{
+  "name": "twitterfinalproject",
+  "version": "1.0.0",
+  "description": "final project for 1.00",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mcsmith",
+  "license": "MIT"
+}
