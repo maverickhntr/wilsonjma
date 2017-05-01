@@ -1,0 +1,24 @@
+{
+  "name": "twitterfinalproject",
+  "version": "1.0.0",
+  "description": "final project for 1.00",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mcsmith",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.2",
+    "twitter": "^1.7.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcsmithalex/wilsonjma.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mcsmithalex/wilsonjma/issues"
+  },
+  "homepage": "https://github.com/mcsmithalex/wilsonjma#readme"
+}
