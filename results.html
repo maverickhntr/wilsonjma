@@ -70,7 +70,7 @@
 
         <div class="row">
             <div class="col-xs-12 col-lg-6 col-lg-offset-3 text-center">
-                <h1>Sentiment Analysis on Twitter</h1>
+                <h1>Results for <span id='queryTitle'></span></h1>
                 <p class="lead">Search for a term to analyze:</p>
                 <div>
                   <div class="input-group">
@@ -120,6 +120,11 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="test.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script>
+  $('#queryTitle').innerHTML(getParameterByName('query', null))
+</script>
+
 </body>
 
 </html>
