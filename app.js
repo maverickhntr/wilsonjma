@@ -1,7 +1,8 @@
 var express = require('express');
 var app = express();
 var path = require('path');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+var affectimo = require('affectimo');
 
 // Twiiter code
 var Twitter = require('twitter');
@@ -41,12 +42,15 @@ app.get('/results', function (req, res) {
   var query = req.query.query
   client.get('search/tweets', {q: query}, function(error, tweets, response) {
      var result = tweets
-     var text = [];
      var alltweets = result.statuses;
      var alltext = alltweets.map(function(object){
        return object.text;
      });
-     console.log(alltext);
+     var text = alltext;
+     var ai = affectimo(text);
+     var emoji = ai.AFFECT;
+     console.log(emoji);
+    //  console.log(alltext);
     //  DO VISUAL STUFF
   });
   res.sendFile(path.join(__dirname+'/results.html'));
