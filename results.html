@@ -29,6 +29,33 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+  <!-- <script>
+  // Twiiter code
+  var Twitter = require('twitter');
+
+  var client = new Twitter({
+    consumer_key: 'Fcnibd8Eese5QWvgAd7wSV5i8',
+    consumer_secret: 'Kc1xXA6zrJJVdEcUZlbfd8uV5vGhqBXjEgJSWnbMYSjCJ57Zsy',
+    access_token_key: '856614020970930176-eQlzwx45EOfJRWJI54D30l8rv9JjPny',
+    access_token_secret: 'iZsjDHF88YGWn2cCuYcEnR3J6yLUMS1GoyuoGfYr71iCC'
+  });
+
+  var query = req.query.query
+  client.get('search/tweets', {q: query}, function(error, tweets, response) {
+     var result = tweets
+     var alltweets = result.statuses;
+     var alltext = alltweets.map(function(object){
+       return object.text;
+     });
+     var text = alltext;
+     var ai = affectimo(text);
+     var emoji = ai.AFFECT;
+    //  document.getElementById("score").innerHTML = "emoji"
+     //console.log(emoji);
+   });
+
+  </script> -->
+
 </head>
 
 <body>
@@ -88,7 +115,16 @@
 
     </div>
     <!-- /.container -->
-
+    <div class="container">
+      <!-- <script src = "app.js"></script>
+      <script>
+      var emoji_string = to.String(emoji);
+      </script> -->
+      <div class="row">
+        <div id="score" class="col-xs-12 col-lg-6 col-lg-offset-3 text-center">New Result</div>
+      </div>
+      <!-- /.row -->
+    </div>
     <!-- / Modals -->
 
 
@@ -103,7 +139,7 @@
         <h4 class="modal-title">About MobFeed</h4>
       </div>
       <div class="modal-body">
-        <p>This project was created by Alex McCullumsmith, Josh Wilson and Jon.</p>
+        <p>This project was created by Alex McCullumsmith, Josh Wilson and Jon Thomas.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -121,8 +157,13 @@
     <script src="test.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+<!-- <script>
+var app = require("app.js");
+
+</script> -->
 <script>
-  $('#queryTitle').innerHTML(getParameterByName('query', null))
+  // var affect_output = localStorage.getItem("affect score");
+  document.getElementById("score").innerHTML = "emoji";
 </script>
 
 </body>

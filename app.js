@@ -15,8 +15,6 @@ var client = new Twitter({
 });
 
 
-app.use(bodyParser());
-
 app.post('/',function(req, res, next){
     var txt_folder_name = req.body;
     // console.log("Alex");
@@ -28,19 +26,26 @@ app.post('/',function(req, res, next){
 
 // app.use("/css", express.static(__dirname+'/css'));
 
+// app.get('/', function (req, res) {
+//   res.sendFile(path.join(__dirname+'/images.jpg'));
+// });
+
+
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname+'/index.html'));
   // console.log(req);
-})
+});
+
+
 
 app.get('/test.js', function (req, res) {
   res.sendFile(path.join(__dirname+'/test.js'));
   // console.log(req);
-})
+});
 
 app.get('/results', function (req, res) {
   var query = req.query.query
-  client.get('search/tweets', {q: query}, function(error, tweets, response) {
+  client.get('search/tweets', {q: query, count: 100, result_type: "popular"}, function(error, tweets, response) {
      var result = tweets
      var alltweets = result.statuses;
      var alltext = alltweets.map(function(object){
@@ -49,12 +54,26 @@ app.get('/results', function (req, res) {
      var text = alltext;
      var ai = affectimo(text);
      var emoji = ai.AFFECT;
+    //  document.getElementById("score").innerHTML = "emoji"
      console.log(emoji);
+  //    if(emoji > 5.00{
+  //      document.getElementById("score").innerHTML = emoji
+  //    }
+  //    else {
+  //      document.getElementById("score").innerHTML = emoji
+  //    };
+  //  );
+     ;
     //  console.log(alltext);
     //  DO VISUAL STUFF
   });
   res.sendFile(path.join(__dirname+'/results.html'));
-});
+  });
+
+  app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname+'/app.js'));
+    // console.log(req);
+  });
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
