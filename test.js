@@ -8,8 +8,9 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-function submitQuery(){
+function submitQuery(url){
   var query = $('#query').val();
+  // $('#button').click();
   // reroute to /results?query=xxxx
   window.location.replace("http://localhost:3000/results?query="+query);
 };

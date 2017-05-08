@@ -3,7 +3,16 @@ var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
 var affectimo = require('affectimo');
+var fs = require('fs');
+var serve   = require('express-static');
+var mkdirp = require('mkdirp');
+var allData = {};
 
+
+mkdirp(__dirname + '/public', function(err) {
+   console.log("path exists unless there was an error")
+});
+// console.log(newai);
 // Twiiter code
 var Twitter = require('twitter');
 
@@ -17,31 +26,25 @@ var client = new Twitter({
 
 app.post('/',function(req, res, next){
     var txt_folder_name = req.body;
-    // console.log("Alex");
     console.log(txt_folder_name);
 });
 
-// app.use(express.static('css'));
-// app.use(express.static('test'));
-
-// app.use("/css", express.static(__dirname+'/css'));
-
-// app.get('/', function (req, res) {
-//   res.sendFile(path.join(__dirname+'/images.jpg'));
-// });
-
+app.get('/affect_score.json', function (req, res) {
+  res.sendFile(path.join(__dirname+'/affect_score.json'));
+});
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname+'/index.html'));
-  // console.log(req);
 });
-
-
 
 app.get('/test.js', function (req, res) {
   res.sendFile(path.join(__dirname+'/test.js'));
-  // console.log(req);
 });
+
+// app.use("/public", express.static(path.join(__dirname, 'public')));
+
+
+
 
 app.get('/results', function (req, res) {
   var query = req.query.query
@@ -51,29 +54,28 @@ app.get('/results', function (req, res) {
      var alltext = alltweets.map(function(object){
        return object.text;
      });
-     var text = alltext;
-     var ai = affectimo(text);
-     var emoji = ai.AFFECT;
-    //  document.getElementById("score").innerHTML = "emoji"
-     console.log(emoji);
-  //    if(emoji > 5.00{
-  //      document.getElementById("score").innerHTML = emoji
-  //    }
-  //    else {
-  //      document.getElementById("score").innerHTML = emoji
-  //    };
-  //  );
-     ;
-    //  console.log(alltext);
-    //  DO VISUAL STUFF
-  });
-  res.sendFile(path.join(__dirname+'/results.html'));
-  });
+        var text = alltext;
+        var affectimo_text = affectimo(text);
+        allData.affect = affectimo_text.AFFECT;
+        allData.intensity = affectimo_text.INTENSITY;
+        fs.writeFile(__dirname + '/public/result.json', JSON.stringify(allData));
 
-  app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname+'/app.js'));
-    // console.log(req);
-  });
+
+
+
+  //       fs.writeFile(__dirname + '/public/result.json', newai);
+  //
+  //
+  //
+  //       });
+});
+app.use(serve(__dirname + '/public'));
+res.sendFile(path.join(__dirname+'/results.html'));
+});
+
+
+
+
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
