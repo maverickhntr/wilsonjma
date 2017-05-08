@@ -103,7 +103,7 @@
                   <div class="input-group">
                     <input type="text" id="query" class="form-control" placeholder="Search">
                     <div class="input-group-btn">
-                      <button class="btn btn-default" onclick="submitQuery()">
+                      <button class="btn btn-default" id= "button" onclick="submitQuery()">
                         <i class="glyphicon glyphicon-search"></i> Search
                       </button>
                     </div>
@@ -149,6 +149,16 @@
   </div>
 </div>
 
+<div class="container">
+  <a>
+    <img id="emoji_vis" src="hair2.jpg" style="width:42px;height:42px;border:0;";>
+  </a>
+
+
+</div>
+
+
+
     <!-- jQuery Version 1.11.1 -->
     <!-- <script src="js/jquery.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -161,11 +171,65 @@
 var app = require("app.js");
 
 </script> -->
+<script src = "result.json"></script>
+<body>
+
+
+
 <script>
-  // var affect_output = localStorage.getItem("affect score");
-  document.getElementById("score").innerHTML = "emoji";
+// get query and populate search bar input
+var name= 'query';
+var url = window.location.href;
+var term = getParameterByName(name, url);
+$("#query").val(term);
+
+var items = [];
+
+$.getJSON("result.json", function( data ) {
+
+  $.each( data, function( key, val ) {
+    items.push( "<li id='" + key + "'>" + val + "</li>" );
+  });
+
+  $( "<ul/>", {
+    "class": "my-new-list",
+    html: items.join( "" )
+  }).appendTo( "body" );
+   document.getElementById("score").innerHTML = "Click Twice to Get Affect and Itensity";
+
+var affect_score_str = items[0].slice(16,20);
+var affect_score_num = Number(affect_score_str);
+
+if(affect_score_num <= 1){document.getElementById("score").innerHTML = "Extremely Angry";}else
+if(affect_score_num <= 2){document.getElementById("score").innerHTML = "Very Angry";}else
+if(affect_score_num <= 3){document.getElementById("score").innerHTML = "Angry";}else
+if(affect_score_num <= 4){document.getElementById("score").innerHTML = "Unhappy";}else
+if(affect_score_num <= 5){document.getElementById("score").innerHTML = "Uncomfortable";}else
+if(affect_score_num <= 6){document.getElementById("score").innerHTML = "Mildly Uncomfortable";}else
+if(affect_score_num <= 7){document.getElementById("emoji_vis").src = "kap.jpg";}else
+if(affect_score_num <= 8){document.getElementById("score").innerHTML = "Mildy Content";}else
+if(affect_score_num <= 9){document.getElementById("score").innerHTML = "Pleasantly Content";}else
+if(affect_score_num <= 10){document.getElementById("score").innerHTML = "Happy";}else
+if(affect_score_num <= 11){document.getElementById("score").innerHTML = "Very Happy";}else
+if(affect_score_num <= 12){document.getElementById("score").innerHTML = "Extremely Happy";}
+  //  $("#button").click();
+
+
+});
+
+
+
+
+
 </script>
 
-</body>
+<script>
 
+</script>
+
+
+
+
+<!-- <script> $("#button").click(); </script> -->
+</body>
 </html>
