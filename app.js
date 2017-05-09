@@ -6,12 +6,15 @@ var affectimo = require('affectimo');
 var fs = require('fs');
 var serve   = require('express-static');
 var mkdirp = require('mkdirp');
+var pause = require('connect-pause');
 var allData = {};
 
+app.use(pause(1000));
 
 mkdirp(__dirname + '/public', function(err) {
    console.log("path exists unless there was an error")
 });
+
 // console.log(newai);
 // Twiiter code
 var Twitter = require('twitter');
@@ -29,10 +32,6 @@ app.post('/',function(req, res, next){
     console.log(txt_folder_name);
 });
 
-app.get('/affect_score.json', function (req, res) {
-  res.sendFile(path.join(__dirname+'/affect_score.json'));
-});
-
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname+'/index.html'));
 });
@@ -41,12 +40,7 @@ app.get('/test.js', function (req, res) {
   res.sendFile(path.join(__dirname+'/test.js'));
 });
 
-// app.use("/public", express.static(path.join(__dirname, 'public')));
-
-
-
-
-app.get('/results', function (req, res) {
+app.use('/results', function (req, res, next) {
   var query = req.query.query
   client.get('search/tweets', {q: query, count: 100, result_type: "popular"}, function(error, tweets, response) {
      var result = tweets
@@ -54,25 +48,28 @@ app.get('/results', function (req, res) {
      var alltext = alltweets.map(function(object){
        return object.text;
      });
-        var text = alltext;
-        var affectimo_text = affectimo(text);
-        allData.affect = affectimo_text.AFFECT;
-        allData.intensity = affectimo_text.INTENSITY;
-        fs.writeFile(__dirname + '/public/result.json', JSON.stringify(allData));
+     var text = alltext;
+     var affectimo_text = affectimo(text);
+     allData.affect = affectimo_text.AFFECT;
+     allData.intensity = affectimo_text.INTENSITY;
+   })
+   next();
+},
 
+function (req, res, next){
+        fs.writeFileSync(__dirname + '/public/result.json', JSON.stringify(allData));
+         next()
+       },
+          function (req, res, next){
+           app.use(serve(__dirname + '/public'));
+           next()
+       },
 
+function (req, res, next){
 
-
-  //       fs.writeFile(__dirname + '/public/result.json', newai);
-  //
-  //
-  //
-  //       });
-});
-app.use(serve(__dirname + '/public'));
 res.sendFile(path.join(__dirname+'/results.html'));
-});
 
+});
 
 
 
