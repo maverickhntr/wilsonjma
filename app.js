@@ -9,7 +9,7 @@ var mkdirp = require('mkdirp');
 var pause = require('connect-pause');
 var allData = {};
 
-app.use(pause(1000));
+app.use(pause(500));
 
 mkdirp(__dirname + '/public', function(err) {
    console.log("path exists unless there was an error")
@@ -42,7 +42,7 @@ app.get('/test.js', function (req, res) {
 
 app.use('/results', function (req, res, next) {
   var query = req.query.query
-  client.get('search/tweets', {q: query, count: 100, result_type: "popular"}, function(error, tweets, response) {
+  client.get('search/tweets', {q: query, count: 100}, function(error, tweets, response) {
      var result = tweets
      var alltweets = result.statuses;
      var alltext = alltweets.map(function(object){
