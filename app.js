@@ -15,7 +15,6 @@ mkdirp(__dirname + '/public', function(err) {
    console.log("path exists unless there was an error")
 });
 
-// console.log(newai);
 // Twiiter code
 var Twitter = require('twitter');
 
