@@ -5,18 +5,14 @@ var bodyParser = require('body-parser');
 var affectimo = require('affectimo');
 var fs = require('fs');
 var serve   = require('express-static');
-var mkdirp = require('mkdirp');
-var pause = require('connect-pause');
+
+// add object to store info in
 var allData = {};
-
-app.use(pause(500));
-
-mkdirp(__dirname + '/public', function(err) {
-   console.log("path exists unless there was an error")
-});
 
 // Twiiter code
 var Twitter = require('twitter');
+
+// Twitter authentication
 
 var client = new Twitter({
   consumer_key: 'Fcnibd8Eese5QWvgAd7wSV5i8',
@@ -25,19 +21,26 @@ var client = new Twitter({
   access_token_secret: 'iZsjDHF88YGWn2cCuYcEnR3J6yLUMS1GoyuoGfYr71iCC'
 });
 
+// Post
 
 app.post('/',function(req, res, next){
     var txt_folder_name = req.body;
     console.log(txt_folder_name);
 });
 
+// Send index.html file to browser
+
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname+'/index.html'));
 });
 
+// Send test.js file to browser
+
 app.get('/test.js', function (req, res) {
   res.sendFile(path.join(__dirname+'/test.js'));
 });
+
+// express middleware which writes JSON file containing affect score and intensity score and sends that file to the browser
 
 app.use('/results', function (req, res, next) {
   var query = req.query.query
@@ -71,7 +74,7 @@ res.sendFile(path.join(__dirname+'/results.html'));
 });
 
 
-
+// configure server
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
