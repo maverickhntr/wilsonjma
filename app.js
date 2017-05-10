@@ -4,7 +4,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var affectimo = require('affectimo');
 var fs = require('fs');
-var serve   = require('express-static');
+var serve = require('express-static');
 
 // add object to store info in
 var allData = {};
