@@ -1,5 +1,4 @@
 # wilsonjma
-Final Project
 MobFeed README.txt
 
 The MobFeed pseudo-web application provides sentiment analysis on tweets containing the searched keyword. 
